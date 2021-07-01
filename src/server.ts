@@ -12,7 +12,7 @@ import routes from "./routes";
 import swaggerFile from "./swagger.json";
 import "./database/typeorm";
 // import "dotenv/config";
-console.log("process.env.PG_HOST", process.env.PG_HOST);
+// console.log("process.env.PG_HOST", process.env.PG_HOST);
 
 const app = express();
 
