@@ -1,8 +1,9 @@
-import { injectable, inject } from "tsyringe";
+import { injectable, inject } from 'tsyringe';
 
-import AppError from "@errors/AppError";
+import AppError from '@errors/AppError';
 
-import { ICategoriesRepository } from "../repositories/ICategoriesRepository";
+import { ICategoriesRepository } from '../repositories/ICategoriesRepository';
+import Category from '../typeorm/entities/Category';
 
 interface IRequet {
   name: string;
@@ -12,15 +13,18 @@ interface IRequet {
 @injectable()
 class CategoriesService {
   constructor(
-    @inject("CategoriesRepository")
-    private categoriesRepository: ICategoriesRepository
+    @inject('CategoriesRepository')
+    private categoriesRepository: ICategoriesRepository,
   ) {}
-  public async execute({ name, description }: IRequet): Promise<void> {
+  public async execute({ name, description }: IRequet): Promise<Category> {
     if (await this.categoriesRepository.findByName(name)) {
-      throw new AppError("Já Existe essa categoria");
+      throw new AppError('Já Existe essa categoria');
     }
-
-    await this.categoriesRepository.create({ name, description });
+    const category = await this.categoriesRepository.create({
+      name,
+      description,
+    });
+    return category;
   }
 }
 

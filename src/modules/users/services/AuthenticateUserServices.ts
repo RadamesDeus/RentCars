@@ -1,11 +1,11 @@
-import authConfig from "@config/auth";
-import IHashPassword from "@modules/users/providers/HashPassword/IHashPassword";
-import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
-import User from "@modules/users/typeorm/entities/User";
-import { sign } from "jsonwebtoken";
-import { injectable, inject } from "tsyringe";
+import authConfig from '@config/auth';
+import IHashPassword from '@modules/users/providers/HashPassword/IHashPassword';
+import { IUsersRepository } from '@modules/users/repositories/IUsersRepository';
+import User from '@modules/users/typeorm/entities/User';
+import { sign } from 'jsonwebtoken';
+import { injectable, inject } from 'tsyringe';
 
-import AppError from "@errors/AppError";
+import AppError from '@errors/AppError';
 
 interface IRequest {
   email_username: string;
@@ -21,11 +21,11 @@ interface IResponse {
 @injectable()
 class AuthenticateUserServices {
   constructor(
-    @inject("UsersRepository")
+    @inject('UsersRepository')
     private usersRepository: IUsersRepository,
 
-    @inject("HashPassword")
-    private hashPassword: IHashPassword
+    @inject('HashPassword')
+    private hashPassword: IHashPassword,
   ) {}
 
   public async execute({
@@ -38,18 +38,18 @@ class AuthenticateUserServices {
 
     if (!user)
       throw new AppError(
-        "Incorrect email/username and password combination",
-        401
+        'Incorrect email/username and password combination',
+        401,
       );
 
     const isMatched = await this.hashPassword.HashCompare(
       password,
 
-      user.password
+      user.password,
     );
 
     if (!isMatched)
-      throw new AppError("Incorrect email/password combination", 401);
+      throw new AppError('Incorrect email/password combination', 401);
 
     const { secret, expiresIn } = authConfig.jwt;
 

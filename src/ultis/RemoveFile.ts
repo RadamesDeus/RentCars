@@ -1,10 +1,10 @@
-import fs from "fs";
-import path from "path";
+import fs from 'fs';
+import path from 'path';
 
-import UploadConfig from "../config/upload";
-import AppError from "../errors/AppError";
+import UploadConfig from '../config/upload';
+import AppError from '../errors/AppError';
 
-export const RemoveFile = async (filename: string): Promise<void> => {
+const RemoveFile = async (filename: string): Promise<void> => {
   const filePath = path.resolve(UploadConfig.pathTmp, filename);
 
   try {
@@ -14,6 +14,8 @@ export const RemoveFile = async (filename: string): Promise<void> => {
     throw new AppError("Couldn't remove the file");
   }
 };
+
+export default RemoveFile;
 /*
 
 export default class RemoveFile {

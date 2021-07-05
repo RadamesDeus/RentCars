@@ -1,14 +1,14 @@
-import multer from "multer";
-import path from "path";
+import multer from 'multer';
+import path from 'path';
 
 // const pathUploads = path.resolve(__dirname, '..', '..', '..', 'uploads');
 
-const pathTmp = path.resolve(__dirname, "..", "..", "tmp");
+const pathTmp = path.resolve(__dirname, '..', '..', 'tmp');
 
 export default {
   pathTmp,
 
-  pathUploads: path.resolve(pathTmp, "uploads"),
+  pathUploads: path.resolve(pathTmp, 'uploads'),
 
   storage: multer.diskStorage({
     destination: pathTmp,

@@ -1,7 +1,7 @@
-import CreateUsersServices from "@modules/users/services/CreateUsersServices";
-import { classToClass } from "class-transformer";
-import { Request, Response } from "express";
-import { container } from "tsyringe";
+import CreateUsersServices from '@modules/users/services/CreateUsersServices';
+import { classToClass } from 'class-transformer';
+import { Request, Response } from 'express';
+import { container } from 'tsyringe';
 
 export default class UsersController {
   public async create(request: Request, response: Response): Promise<Response> {

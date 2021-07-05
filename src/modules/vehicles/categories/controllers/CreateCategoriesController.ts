@@ -1,8 +1,8 @@
-import { Request, Response } from "express";
-import "reflect-metadata";
-import { container } from "tsyringe";
+import { Request, Response } from 'express';
+import 'reflect-metadata';
+import { container } from 'tsyringe';
 
-import CreateCategoriesService from "../services/CreateCategoriesService";
+import CreateCategoriesService from '../services/CreateCategoriesService';
 
 export default class CategoriesController {
   public async create(request: Request, response: Response): Promise<Response> {

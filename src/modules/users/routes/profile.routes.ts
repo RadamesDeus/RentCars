@@ -1,7 +1,7 @@
-import UserProfileController from "@modules/users/controllers/UserProfileController";
-import ensureAuthenticated from "@modules/users/middlewares/ensureAuthenticated";
+import UserProfileController from '@modules/users/controllers/UserProfileController';
+import ensureAuthenticated from '@modules/users/middlewares/ensureAuthenticated';
 // import { celebrate, Segments, Joi } from "celebrate";
-import { Router } from "express";
+import { Router } from 'express';
 
 const routes = Router();
 
@@ -9,10 +9,10 @@ const userProfileController = new UserProfileController();
 
 //  name, email, oldpassword, password
 
-routes.get("/profile", ensureAuthenticated, userProfileController.show);
+routes.get('/profile', ensureAuthenticated, userProfileController.show);
 
 routes.put(
-  "/profile",
+  '/profile',
 
   // celebrate({
   //   [Segments.BODY]: {
@@ -30,7 +30,7 @@ routes.put(
 
   ensureAuthenticated,
 
-  userProfileController.update
+  userProfileController.update,
 );
 
 export default routes;

@@ -1,15 +1,15 @@
-import { Exclude, Expose } from "class-transformer";
+import { Exclude, Expose } from 'class-transformer';
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-} from "typeorm";
+} from 'typeorm';
 
-@Entity("users")
+@Entity('users')
 class Users {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
@@ -35,7 +35,7 @@ class Users {
   @Column()
   avatar: string;
 
-  @Expose({ name: "avatar_url" })
+  @Expose({ name: 'avatar_url' })
   getAvatarUrl(): string {
     return this.avatar && `${process.env.APP_API_URL}/files/${this.avatar}`;
   }

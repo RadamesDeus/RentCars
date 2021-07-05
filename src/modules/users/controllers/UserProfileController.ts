@@ -1,10 +1,10 @@
 // index, show, create, update, delete
 
-import ShowProfileUserServices from "@modules/users/services/ShowProfileUserServices";
-import UpdateProfileUserServices from "@modules/users/services/UpdateProfileUserServices";
-import { classToClass } from "class-transformer";
-import { Request, Response } from "express";
-import { container } from "tsyringe";
+import ShowProfileUserServices from '@modules/users/services/ShowProfileUserServices';
+import UpdateProfileUserServices from '@modules/users/services/UpdateProfileUserServices';
+import { classToClass } from 'class-transformer';
+import { Request, Response } from 'express';
+import { container } from 'tsyringe';
 
 export default class UserProfileController {
   public async show(request: Request, response: Response): Promise<Response> {

@@ -1,12 +1,13 @@
-import IUsersRepository from '@modules/users/repositories/IUsersRepository';
-import ICreateUsersDTO from '@modules/users/dtos/ICreateUsersDTO';
-import User from '@modules/users/infra/typeorm/entities/User';
+import {
+  IUsersRepository,
+  ICreateUsersDTO,
+} from '@modules/users/repositories/IUsersRepository';
+import User from '@modules/users/typeorm/entities/User';
+import { v4 as uuidv4 } from 'uuid';
 
-import { uuid } from 'uuidv4';
-
-interface ICreateUsersRequest extends ICreateUsersDTO {
-  created_at?: Date;
-}
+// interface ICreateUsersRequest extends ICreateUsersDTO {
+//   created_at?: Date;
+// }
 
 class FakeUsersRepository implements IUsersRepository {
   private Users: User[] = [];
@@ -14,11 +15,20 @@ class FakeUsersRepository implements IUsersRepository {
   public async create({
     name,
     email,
+    username,
     password,
+    driver_license,
   }: ICreateUsersDTO): Promise<User> {
     const user = new User();
 
-    Object.assign(user, { id: uuid(), name, email, password });
+    Object.assign(user, {
+      id: uuidv4(),
+      name,
+      email: email.toLowerCase(),
+      username: username.toLowerCase(),
+      password,
+      driver_license,
+    });
     this.Users.push(user);
     return user;
   }
@@ -35,6 +45,11 @@ class FakeUsersRepository implements IUsersRepository {
 
   public async findAll(): Promise<User[]> {
     return this.Users;
+  }
+
+  public async findByUsername(username: string): Promise<User | undefined> {
+    const user = this.Users.find(userfind => userfind.username === username);
+    return user;
   }
 
   public async save(users: User): Promise<User | undefined> {
