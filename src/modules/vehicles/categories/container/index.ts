@@ -1,9 +1,9 @@
-import { container } from "tsyringe";
+import { container } from 'tsyringe';
 
-import { ICategoriesRepository } from "../repositories/ICategoriesRepository";
-import CategoriesRepository from "../typeorm/repositories/CategoriesRepository";
+import { ICategoriesRepository } from '../repositories/ICategoriesRepository';
+import CategoriesRepository from '../typeorm/repositories/CategoriesRepository';
 
 container.registerSingleton<ICategoriesRepository>(
-  "CategoriesRepository",
-  CategoriesRepository
+  'CategoriesRepository',
+  CategoriesRepository,
 );

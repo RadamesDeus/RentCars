@@ -1,14 +1,15 @@
+import Category from '@modules/vehicles/categories/typeorm/entities/Category';
 import {
   Entity,
   Column,
   CreateDateColumn,
   PrimaryGeneratedColumn,
-  OneToOne,
   JoinColumn,
+  ManyToOne,
 } from 'typeorm';
 
-@Entity('car')
-class Category {
+@Entity('cars')
+class Car {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -33,12 +34,18 @@ class Category {
   @Column()
   category_id: string;
 
-  @OneToOne(() => Category)
+  @ManyToOne(() => Category)
   @JoinColumn({ name: 'category_id' })
   category: Category;
 
   @CreateDateColumn()
   created_at: Date;
+
+  constructor() {
+    if (!this.id) {
+      this.available = true;
+    }
+  }
 }
 
-export default Category;
+export default Car;
