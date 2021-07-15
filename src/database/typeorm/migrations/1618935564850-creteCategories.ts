@@ -1,27 +1,27 @@
-import { MigrationInterface, QueryRunner, Table } from "typeorm";
+import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
 export class creteCategories1618935564850 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: "categories",
+        name: 'categories',
         columns: [
           {
-            name: "id",
-            type: "uuid",
+            name: 'id',
+            type: 'uuid',
             isPrimary: true,
-            generationStrategy: "uuid",
-            default: "uuid_generate_v4()",
+            generationStrategy: 'uuid',
+            default: 'uuid_generate_v4()',
           },
-          { name: "name", type: "varchar" },
-          { name: "description", type: "varchar" },
-          { name: "created_at", type: "timestamp", default: "now()" },
+          { name: 'name', type: 'varchar' },
+          { name: 'description', type: 'varchar' },
+          { name: 'created_at', type: 'timestamp', default: 'now()' },
         ],
-      })
+      }),
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable("categories");
+    await queryRunner.dropTable('categories');
   }
 }
