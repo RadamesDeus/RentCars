@@ -1,4 +1,3 @@
-import Category from '@modules/vehicles/categories/typeorm/entities/Category';
 import {
   Entity,
   Column,
@@ -7,6 +6,8 @@ import {
   JoinColumn,
   ManyToOne,
 } from 'typeorm';
+
+import Category from '../../../categories/typeorm/entities/Category';
 
 @Entity('cars')
 class Car {

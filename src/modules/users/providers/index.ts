@@ -1,6 +1,6 @@
-import BCryptHashPassword from "@modules/users/providers/HashPassword/implements/BCryptHashPassword";
-import { container } from "tsyringe";
+import BCryptHashPassword from '@modules/users/providers/HashPassword/implements/BCryptHashPassword';
+import { container } from 'tsyringe';
 
-import IHashPassword from "./HashPassword/IHashPassword";
+import IHashPassword from './HashPassword/IHashPassword';
 
-container.registerSingleton<IHashPassword>("HashPassword", BCryptHashPassword);
+container.registerSingleton<IHashPassword>('HashPassword', BCryptHashPassword);

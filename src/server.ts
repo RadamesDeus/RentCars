@@ -8,12 +8,15 @@ import AppError from '@errors/AppError';
 import 'express-async-errors';
 
 import './container';
+import CrateConnection from './database/typeorm';
 import routes from './routes';
 import swaggerFile from './swagger.json';
-import './database/typeorm';
+// import './database/typeorm';
+
 // import "dotenv/config";
 // console.log("process.env.PG_HOST", process.env.PG_HOST);
 
+CrateConnection();
 const app = express();
 
 app.use(express.json());

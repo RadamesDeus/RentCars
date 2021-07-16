@@ -6,7 +6,8 @@
   "scripts": {
     "dev:server": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modeles --respawn src/server.ts",
     "typeorm": "ts-node-dev ./node_modules/typeorm/cli",
-    "test": "jest"
+    "test": "jest",
+    "seed:admin": "ts-node-dev src/database/typeorm/seed/admin.ts"
   },
   "dependencies": {
     "axios": "^0.21.1",

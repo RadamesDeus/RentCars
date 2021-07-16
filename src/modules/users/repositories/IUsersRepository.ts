@@ -6,6 +6,7 @@ interface ICreateUsersDTO {
   username: string;
   password: string;
   driver_license: string;
+  isAdmin?: boolean;
 }
 
 interface IUsersRepository {
