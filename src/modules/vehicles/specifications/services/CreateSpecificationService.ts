@@ -1,7 +1,7 @@
-import { injectable, inject } from "tsyringe";
+import { injectable, inject } from 'tsyringe';
 
-import AppError from "../../../../errors/AppError";
-import { ISpecificationsRepository } from "../repositories/ISpecificationsRepository";
+import AppError from '../../../../errors/AppError';
+import { ISpecificationsRepository } from '../repositories/ISpecificationsRepository';
 
 interface IRequet {
   name: string;
@@ -10,12 +10,12 @@ interface IRequet {
 @injectable()
 class CreateSpecificationService {
   constructor(
-    @inject("SpecificationsRepository")
-    private specificationsRepository: ISpecificationsRepository
+    @inject('SpecificationsRepository')
+    private specificationsRepository: ISpecificationsRepository,
   ) {}
   async execute({ name, description }: IRequet): Promise<void> {
     if (await this.specificationsRepository.findByName(name)) {
-      throw new AppError("Já Existe essa especifição");
+      throw new AppError('Já Existe essa especifição');
     }
 
     await this.specificationsRepository.create({ name, description });

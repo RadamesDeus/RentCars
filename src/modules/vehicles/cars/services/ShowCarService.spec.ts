@@ -1,35 +1,95 @@
-import FakeCategoriesRepository from '@modules/vehicles/categories/repositories/fakes/FakeCategoriesRepository';
-import CreateCategoriesService from '@modules/vehicles/categories/services/CreateCategoriesService';
-import crypto from 'crypto';
-import generete from 'ultis/genereteText';
+import generete from '../../../../ultis/genereteText';
+import FakeUsersRepository from '../repositories/fakes/FakeCarsRepository';
+import { IListCarFilterDTO } from '../repositories/ICarsRepository';
+import Car from '../typeorm/entities/Car';
+import CreateCarService from './CreateCarService';
+import ShowCarsService from './ShowCarsService';
 
-// import AppError from '@errors/AppError';
-
-// import ShowCarsService from './ShowCarsService';
-
-// const generete = () => crypto.randomBytes(20).toString('hex');
-// const categoriesRepository = new FakeCategoriesRepository();
-
-// const createCategoriesService = new CreateCategoriesService(
-//   categoriesRepository,
-// );
-
-// const show = new ShowCarsService(categoriesRepository);
+const fakeUsersRepository = new FakeUsersRepository();
+const createCarService = new CreateCarService(fakeUsersRepository);
+const showCarsService = new ShowCarsService(fakeUsersRepository);
 
 describe('List Category', () => {
-  it('should be able list categores', async () => {
-    // await createCategoriesService.execute({
-    //   name: generete(),
-    //   description: generete(),
-    // });
-    // await createCategoriesService.execute({
-    //   name: generete(),
-    //   description: generete(),
-    // });
-    // await createCategoriesService.execute({
-    //   name: generete(),
-    //   description: generete(),
-    // });
-    // expect(await show.execute()).toHaveLength(3);
+  let car = new Car();
+  beforeEach(async () => {
+    await createCarService.execute({
+      description: generete(),
+      daily_rate: 100,
+      license_plate: generete(),
+      fine_amount: 60,
+      brand: generete(),
+      category_id: generete(),
+    });
+
+    car = await createCarService.execute({
+      description: generete(),
+      daily_rate: 100,
+      license_plate: generete(),
+      fine_amount: 60,
+      brand: generete(),
+      category_id: generete(),
+    });
+
+    await createCarService.execute({
+      description: generete(),
+      daily_rate: 100,
+      license_plate: generete(),
+      fine_amount: 60,
+      brand: generete(),
+      category_id: generete(),
+    });
+  });
+
+  it('should be able list cars', async () => {
+    expect(
+      await showCarsService.execute({
+        available: true,
+      } as IListCarFilterDTO),
+    ).toHaveLength(3);
+  });
+
+  it('should be not able list filter cars', async () => {
+    expect(
+      await showCarsService.execute({
+        available: true,
+        brand: 'teste',
+      } as IListCarFilterDTO),
+    ).toHaveLength(0);
+  });
+
+  it('should be able list filter cars by brand', async () => {
+    expect(
+      await showCarsService.execute({
+        available: true,
+        brand: car.brand,
+      } as IListCarFilterDTO),
+    ).toHaveLength(1);
+  });
+
+  it('should be able list filter cars by license plate', async () => {
+    expect(
+      await showCarsService.execute({
+        available: true,
+        license_plate: car.license_plate,
+      } as IListCarFilterDTO),
+    ).toHaveLength(1);
+  });
+
+  it('should be able list filter cars by categoty', async () => {
+    expect(
+      await showCarsService.execute({
+        available: true,
+        category_id: car.category_id,
+      } as IListCarFilterDTO),
+    ).toHaveLength(1);
+  });
+
+  it('should be able list filter cars by description', async () => {
+    expect(
+      await showCarsService.execute({
+        available: true,
+        description: car.description,
+      } as IListCarFilterDTO),
+    ).toHaveLength(1);
   });
 });

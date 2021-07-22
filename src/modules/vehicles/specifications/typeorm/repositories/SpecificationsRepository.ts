@@ -1,10 +1,10 @@
-import { getRepository, Repository } from "typeorm";
+import { getRepository, In, Repository } from 'typeorm';
 
 import {
   ISpecificationsRepository,
   ISpecificationsRepositoryDTO,
-} from "../../repositories/ISpecificationsRepository";
-import Specification from "../entities/Specification";
+} from '../../repositories/ISpecificationsRepository';
+import Specification from '../entities/Specification';
 
 class SpecificationsRepository implements ISpecificationsRepository {
   private ormRepository: Repository<Specification>;
@@ -30,6 +30,12 @@ class SpecificationsRepository implements ISpecificationsRepository {
 
   async findByName(name: string): Promise<Specification | undefined> {
     return this.ormRepository.findOne({ where: { name } });
+  }
+
+  findByIds(
+    listSpecification_id: string[],
+  ): Promise<Specification[] | undefined> {
+    return this.ormRepository.find({ id: In(listSpecification_id) });
   }
 }
 export default SpecificationsRepository;

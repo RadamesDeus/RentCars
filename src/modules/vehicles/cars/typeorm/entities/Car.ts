@@ -1,3 +1,4 @@
+import Specification from '@modules/vehicles/specifications/typeorm/entities/Specification';
 import {
   Entity,
   Column,
@@ -5,6 +6,8 @@ import {
   PrimaryGeneratedColumn,
   JoinColumn,
   ManyToOne,
+  JoinTable,
+  ManyToMany,
 } from 'typeorm';
 
 import Category from '../../../categories/typeorm/entities/Category';
@@ -38,6 +41,14 @@ class Car {
   @ManyToOne(() => Category)
   @JoinColumn({ name: 'category_id' })
   category: Category;
+
+  @ManyToMany(() => Specification)
+  @JoinTable({
+    name: 'specifications_cars',
+    joinColumns: [{ name: 'car_id' }],
+    inverseJoinColumns: [{ name: 'specification_id' }],
+  })
+  specification: Specification[];
 
   @CreateDateColumn()
   created_at: Date;

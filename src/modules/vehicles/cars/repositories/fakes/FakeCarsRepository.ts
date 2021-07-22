@@ -1,11 +1,16 @@
+import { v4 as uuidv4 } from 'uuid';
+
 import Car from '../../typeorm/entities/Car';
-import { ICarsRepository, ICreateCarDTO } from '../ICarsRepository';
+import {
+  ICarsRepository,
+  ICreateCarDTO,
+  IListCarFilterDTO,
+} from '../ICarsRepository';
 
 class FakeCarsRepository implements ICarsRepository {
-  findByLicensePlate(license_plate: string): Promise<Car | undefined> {
-    throw new Error('Method not implemented.');
-  }
-  create({
+  private Cars: Car[] = [];
+
+  public async create({
     description,
     daily_rate,
     license_plate,
@@ -13,10 +18,44 @@ class FakeCarsRepository implements ICarsRepository {
     brand,
     category_id,
   }: ICreateCarDTO): Promise<Car> {
-    throw new Error('Method not implemented.');
+    const car = new Car();
+
+    Object.assign(car, {
+      id: uuidv4(),
+      description,
+      daily_rate,
+      license_plate,
+      fine_amount,
+      brand,
+      category_id,
+    });
+
+    this.Cars.push(car);
+    return car;
   }
-  list(): Promise<Car[]> {
-    throw new Error('Method not implemented.');
+
+  public async findByLicensePlate(
+    license_plate: string,
+  ): Promise<Car | undefined> {
+    return this.Cars.find(item => item.license_plate === license_plate);
+  }
+
+  public async list(optinFilter: IListCarFilterDTO): Promise<Car[]> {
+    return this.Cars.filter(
+      item =>
+        (!optinFilter.license_plate ||
+          item.license_plate === optinFilter.license_plate) &&
+        (!optinFilter.available || item.available === optinFilter.available) &&
+        (!optinFilter.description ||
+          item.description === optinFilter.description) &&
+        (!optinFilter.brand || item.brand === optinFilter.brand) &&
+        (!optinFilter.category_id ||
+          item.category_id === optinFilter.category_id),
+    );
+  }
+
+  public async findById(car_id: string): Promise<Car | undefined> {
+    return this.Cars.find(item => item.id === car_id);
   }
 }
 

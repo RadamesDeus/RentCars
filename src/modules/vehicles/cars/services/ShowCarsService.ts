@@ -1,6 +1,9 @@
 import { injectable, inject } from 'tsyringe';
 
-import { ICarsRepository } from '../repositories/ICarsRepository';
+import {
+  ICarsRepository,
+  IListCarFilterDTO,
+} from '../repositories/ICarsRepository';
 import Car from '../typeorm/entities/Car';
 
 @injectable()
@@ -9,8 +12,8 @@ class ShowCarService {
     @inject('CarsRepository')
     private carRepository: ICarsRepository,
   ) {}
-  async execute(): Promise<Car[]> {
-    return this.carRepository.list();
+  async execute(optionFilter: IListCarFilterDTO): Promise<Car[]> {
+    return this.carRepository.list(optionFilter);
   }
 }
 

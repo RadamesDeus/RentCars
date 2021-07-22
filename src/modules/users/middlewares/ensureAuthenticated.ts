@@ -1,8 +1,8 @@
-import authConfig from "@config/auth";
-import { Request, Response, NextFunction } from "express";
-import { verify, TokenExpiredError } from "jsonwebtoken";
+import authConfig from '@config/auth';
+import { Request, Response, NextFunction } from 'express';
+import { verify, TokenExpiredError } from 'jsonwebtoken';
 
-import AppError from "@errors/AppError";
+import AppError from '@errors/AppError';
 
 interface ITokenPayLoad {
   iat: string;
@@ -13,22 +13,23 @@ interface ITokenPayLoad {
 export default function ensureAuthenticated(
   request: Request,
   response: Response,
-  next: NextFunction
+  next: NextFunction,
 ): void {
   const authHeader = request.headers.authorization;
+  console.log(request.body);
 
-  if (!authHeader) throw new AppError("JWT token is missing", 401);
+  if (!authHeader) throw new AppError('JWT token is missing', 401);
 
-  const [, token] = authHeader.split(" ");
+  const [, token] = authHeader.split(' ');
 
   verify(token, authConfig.jwt.secret, (err, decoded) => {
     if (err instanceof TokenExpiredError) {
-      return response.status(204).json();
+      throw new AppError(`Token Expired`, 401);
     }
 
     if (err) throw new AppError(err.message, 401);
 
-    const { sub } = decoded as ITokenPayLoad;
+    const { sub } = decoded as unknown as ITokenPayLoad;
 
     request.user = {
       id: sub,

@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 
+import { errors } from 'celebrate';
 import express, { Request, Response, NextFunction } from 'express';
 import swaggerUi from 'swagger-ui-express';
 
@@ -23,7 +24,7 @@ app.use(express.json());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.use(routes);
-
+app.use(errors());
 app.use(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   (err: Error, request: Request, response: Response, next: NextFunction) => {

@@ -1,4 +1,4 @@
-// import 'reflect-metadata';
+import 'reflect-metadata';
 import { injectable, inject } from 'tsyringe';
 
 import AppError from '@errors/AppError';

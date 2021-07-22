@@ -1,3 +1,5 @@
+import Specification from '@modules/vehicles/specifications/typeorm/entities/Specification';
+
 import Car from '../typeorm/entities/Car';
 
 interface ICreateCarDTO {
@@ -7,19 +9,24 @@ interface ICreateCarDTO {
   fine_amount: number;
   brand: string;
   category_id: string;
+  specification?: Specification[];
+  id?: string;
+}
+
+interface IListCarFilterDTO {
+  id: string;
+  description: string;
+  license_plate: string;
+  brand: string;
+  category_id: string;
+  available: true;
 }
 
 interface ICarsRepository {
-  create({
-    description,
-    daily_rate,
-    license_plate,
-    fine_amount,
-    brand,
-    category_id,
-  }: ICreateCarDTO): Promise<Car>;
-  list(): Promise<Car[]>;
+  create(createCarDTO: ICreateCarDTO): Promise<Car>;
+  list(optionFilter: IListCarFilterDTO | undefined): Promise<Car[]>;
   findByLicensePlate(license_plate: string): Promise<Car | undefined>;
+  findById(car_id: string): Promise<Car | undefined>;
 }
 
-export { ICarsRepository, ICreateCarDTO };
+export { ICarsRepository, ICreateCarDTO, IListCarFilterDTO };

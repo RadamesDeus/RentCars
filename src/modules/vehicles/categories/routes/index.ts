@@ -1,3 +1,5 @@
+import ensureAdmin from '@modules/users/middlewares/ensureAdmin';
+import ensureAuthenticated from '@modules/users/middlewares/ensureAuthenticated';
 import { Router } from 'express';
 import multer from 'multer';
 
@@ -13,13 +15,20 @@ const listCategoriesController = new ListCategoriesController();
 
 const upload = multer(UploadConfig);
 
-routes.post('/', createCategoriesController.create);
-routes.get('/', listCategoriesController.show);
+routes.post(
+  '/',
+  ensureAuthenticated,
+  ensureAdmin,
+  createCategoriesController.create,
+);
 
 routes.patch(
   '/import',
+  ensureAuthenticated,
+  ensureAdmin,
   upload.single('file'),
   createCategoriesFileController.create,
 );
 
+routes.get('/', listCategoriesController.show);
 export default routes;
