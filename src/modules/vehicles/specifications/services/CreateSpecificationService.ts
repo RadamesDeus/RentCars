@@ -2,6 +2,7 @@ import { injectable, inject } from 'tsyringe';
 
 import AppError from '../../../../errors/AppError';
 import { ISpecificationsRepository } from '../repositories/ISpecificationsRepository';
+import Specification from '../typeorm/entities/Specification';
 
 interface IRequet {
   name: string;
@@ -13,12 +14,12 @@ class CreateSpecificationService {
     @inject('SpecificationsRepository')
     private specificationsRepository: ISpecificationsRepository,
   ) {}
-  async execute({ name, description }: IRequet): Promise<void> {
+  async execute({ name, description }: IRequet): Promise<Specification> {
     if (await this.specificationsRepository.findByName(name)) {
       throw new AppError('Já Existe essa especifição');
     }
 
-    await this.specificationsRepository.create({ name, description });
+    return this.specificationsRepository.create({ name, description });
   }
 }
 

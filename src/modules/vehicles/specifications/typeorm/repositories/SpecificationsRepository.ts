@@ -16,12 +16,13 @@ class SpecificationsRepository implements ISpecificationsRepository {
   async create({
     name,
     description,
-  }: ISpecificationsRepositoryDTO): Promise<void> {
+  }: ISpecificationsRepositoryDTO): Promise<Specification> {
     const specification = this.ormRepository.create({
       name,
       description,
     });
     await this.ormRepository.save(specification);
+    return specification;
   }
 
   async list(): Promise<Specification[]> {

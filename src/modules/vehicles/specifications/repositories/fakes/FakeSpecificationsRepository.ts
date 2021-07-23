@@ -12,11 +12,12 @@ class FakeCategoriesRepository implements ISpecificationsRepository {
   public async create({
     name,
     description,
-  }: ISpecificationsRepositoryDTO): Promise<void> {
+  }: ISpecificationsRepositoryDTO): Promise<Specification> {
     const specification = new Specification();
 
-    Object.assign(Specification, { id: uuidv4(), name, description });
+    Object.assign(specification, { id: uuidv4(), name, description });
     this.Specification.push(specification);
+    return specification;
   }
 
   public async list(): Promise<Specification[]> {

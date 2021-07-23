@@ -1,31 +1,29 @@
-import FakeCategoriesRepository from '@modules/vehicles/categories/repositories/fakes/FakeCategoriesRepository';
-import CreateCategoriesService from '@modules/vehicles/categories/services/CreateCategoriesService';
+import FakeSpecificationsRepository from '@modules/vehicles/specifications/repositories/fakes/FakeSpecificationsRepository';
+import CreateSpecificationService from '@modules/vehicles/specifications/services/CreateSpecificationService';
 import crypto from 'crypto';
 
-import AppError from '@errors/AppError';
-
-import ShowCategoriesService from './ShowCategoriesService';
+import ShowSpecificationService from './ShowSpecificationService';
 
 const generete = () => crypto.randomBytes(20).toString('hex');
-const categoriesRepository = new FakeCategoriesRepository();
+const fakeCategoriesRepository = new FakeSpecificationsRepository();
 
-const createCategoriesService = new CreateCategoriesService(
-  categoriesRepository,
+const createSpecificationService = new CreateSpecificationService(
+  fakeCategoriesRepository,
 );
 
-const show = new ShowCategoriesService(categoriesRepository);
+const show = new ShowSpecificationService(fakeCategoriesRepository);
 
-describe('List Category', () => {
-  it('should be able list categores', async () => {
-    await createCategoriesService.execute({
+describe('List Specification', () => {
+  it('should be able list Specifications', async () => {
+    await createSpecificationService.execute({
       name: generete(),
       description: generete(),
     });
-    await createCategoriesService.execute({
+    await createSpecificationService.execute({
       name: generete(),
       description: generete(),
     });
-    await createCategoriesService.execute({
+    await createSpecificationService.execute({
       name: generete(),
       description: generete(),
     });
