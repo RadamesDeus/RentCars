@@ -5,12 +5,12 @@ import {
   TableForeignKey,
 } from 'typeorm';
 
-// eslint-disable-next-line
-export class CreateSpecificationsCars1626912250287 implements MigrationInterface {
+// eslint-disable-next-line prettier/prettier
+export class CreateCarsSpecifications1627136436809 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'specifications_cars',
+        name: 'cars_specifications',
         columns: [
           { name: 'car_id', type: 'uuid' },
           { name: 'specification_id', type: 'uuid' },
@@ -19,9 +19,9 @@ export class CreateSpecificationsCars1626912250287 implements MigrationInterface
       }),
     );
     await queryRunner.createForeignKey(
-      'specifications_cars',
+      'cars_specifications',
       new TableForeignKey({
-        name: 'fk_SpecificationId_SpecificationsCars',
+        name: 'fk_CarsSpecifications_SpecificationId',
         columnNames: ['specification_id'],
         referencedColumnNames: ['id'],
         referencedTableName: 'specifications',
@@ -31,9 +31,9 @@ export class CreateSpecificationsCars1626912250287 implements MigrationInterface
     );
 
     await queryRunner.createForeignKey(
-      'specifications_cars',
+      'cars_specifications',
       new TableForeignKey({
-        name: 'fk_CarId_SpecificationsCars',
+        name: 'fk_CarsSpecifications_CarId',
         columnNames: ['car_id'],
         referencedColumnNames: ['id'],
         referencedTableName: 'cars',
@@ -45,13 +45,13 @@ export class CreateSpecificationsCars1626912250287 implements MigrationInterface
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.dropForeignKey(
-      'specifications_cars',
-      'fk_SpecificationId_SpecificationsCars',
+      'cars_specifications',
+      'fk_CarsSpecifications_SpecificationId',
     );
     await queryRunner.dropForeignKey(
-      'specifications_cars',
-      'fk_CarId_SpecificationsCars',
+      'cars_specifications',
+      'fk_CarsSpecifications_CarId',
     );
-    await queryRunner.dropTable('specifications_cars');
+    await queryRunner.dropTable('cars_specifications');
   }
 }

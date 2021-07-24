@@ -1,4 +1,3 @@
-import Specification from '@modules/vehicles/specifications/typeorm/entities/Specification';
 import {
   Entity,
   Column,
@@ -11,6 +10,7 @@ import {
 } from 'typeorm';
 
 import Category from '../../../categories/typeorm/entities/Category';
+import Specification from '../../../specifications/typeorm/entities/Specification';
 
 @Entity('cars')
 class Car {
@@ -44,7 +44,7 @@ class Car {
 
   @ManyToMany(() => Specification)
   @JoinTable({
-    name: 'specifications_cars',
+    name: 'cars_specifications',
     joinColumns: [{ name: 'car_id' }],
     inverseJoinColumns: [{ name: 'specification_id' }],
   })

@@ -1,15 +1,20 @@
+import UploadConfig from '@config/upload';
 import ensureAdmin from '@modules/users/middlewares/ensureAdmin';
 import ensureAuthenticated from '@modules/users/middlewares/ensureAuthenticated';
 import { celebrate, Segments, Joi } from 'celebrate';
 import { Router } from 'express';
+import multer from 'multer';
 
 import CreateCategoriesController from '../controllers/CreateCarController';
+import CreateCarImageController from '../controllers/CreateCarImageController';
 import CreateCarSpecificationController from '../controllers/CreateCarSpecificationController';
 import ListCarController from '../controllers/ListCarController';
 
 const routes = Router();
+const upload = multer(UploadConfig);
 const createCategoriesController = new CreateCategoriesController();
 const createCarSpecificationController = new CreateCarSpecificationController();
+const createCarImageController = new CreateCarImageController();
 const listCategoriesController = new ListCarController();
 
 routes.post(
@@ -32,6 +37,19 @@ routes.post(
     }),
   }),
   createCarSpecificationController.create,
+);
+
+routes.patch(
+  '/images/:car_id',
+  ensureAuthenticated,
+  ensureAdmin,
+  celebrate({
+    [Segments.PARAMS]: Joi.object().keys({
+      car_id: Joi.string().required().uuid(),
+    }),
+  }),
+  upload.array('images'),
+  createCarImageController.create,
 );
 
 routes.get(
