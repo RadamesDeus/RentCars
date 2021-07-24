@@ -20,9 +20,17 @@ routes.post(
 );
 
 routes.post(
-  '/specifications',
+  '/specifications/:car_id',
   ensureAuthenticated,
   ensureAdmin,
+  celebrate({
+    [Segments.PARAMS]: Joi.object().keys({
+      car_id: Joi.string().required().uuid(),
+    }),
+    [Segments.BODY]: Joi.object().keys({
+      specification_ids: Joi.array().items(Joi.string().uuid()).min(1),
+    }),
+  }),
   createCarSpecificationController.create,
 );
 

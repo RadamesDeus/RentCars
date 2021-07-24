@@ -17,18 +17,28 @@ class FakeCarsRepository implements ICarsRepository {
     fine_amount,
     brand,
     category_id,
+    specification,
+    id,
   }: ICreateCarDTO): Promise<Car> {
     const car = new Car();
 
     Object.assign(car, {
-      id: uuidv4(),
+      id: !id ? uuidv4() : id,
       description,
       daily_rate,
       license_plate,
       fine_amount,
       brand,
       category_id,
+      specification,
+      available: true,
     });
+
+    if (id) {
+      const index = this.Cars.findIndex(obj => obj.id === id);
+      this.Cars[index] = car;
+      return car;
+    }
 
     this.Cars.push(car);
     return car;

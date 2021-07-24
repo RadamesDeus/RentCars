@@ -1,13 +1,28 @@
-import generete from '../../../../ultis/genereteText';
-import FakeUsersRepository from '../repositories/fakes/FakeCarsRepository';
-import CreateCarService from './CreateCarService';
+import FakeSpecificationsRepository from '@modules/vehicles/specifications/repositories/fakes/FakeSpecificationsRepository';
+import CreateSpecificationService from '@modules/vehicles/specifications/services/CreateSpecificationService';
 
-const fakeUsersRepository = new FakeUsersRepository();
-const createCarService = new CreateCarService(fakeUsersRepository);
+import generete from '../../../../ultis/genereteText';
+import FakeCarsRepository from '../repositories/fakes/FakeCarsRepository';
+import CreateCarService from './CreateCarService';
+import CreateCarSpecificationService from './CreateCarSpecificationService';
+
+const fakeCarsRepository = new FakeCarsRepository();
+const createCarService = new CreateCarService(fakeCarsRepository);
+
+const fakeSpecificationsRepository = new FakeSpecificationsRepository();
+
+const createSpecificationService = new CreateSpecificationService(
+  fakeSpecificationsRepository,
+);
+
+const createCarSpecificationService = new CreateCarSpecificationService(
+  fakeCarsRepository,
+  fakeSpecificationsRepository,
+);
 
 describe('Create Car', () => {
   it('should be able to add a new specification to the car', async () => {
-    const data = {
+    const dataCar = {
       description: generete(),
       daily_rate: 100,
       license_plate: generete(),
@@ -15,6 +30,25 @@ describe('Create Car', () => {
       brand: generete(),
       category_id: generete(),
     };
-    expect(await createCarService.execute(data)).toHaveProperty('id');
+    const car = await createCarService.execute(dataCar);
+
+    const specification1 = await createSpecificationService.execute({
+      name: generete(),
+      description: generete(),
+    });
+
+    const specification2 = await createSpecificationService.execute({
+      name: generete(),
+      description: generete(),
+    });
+
+    const listSpecification: string[] = [specification1.id, specification2.id];
+    const carSpecification = await createCarSpecificationService.execute({
+      car_id: car.id,
+      specification_ids: listSpecification,
+    });
+
+    expect(carSpecification).toHaveProperty('specification');
+    expect(carSpecification.specifications).toHaveLength(2);
   });
 });

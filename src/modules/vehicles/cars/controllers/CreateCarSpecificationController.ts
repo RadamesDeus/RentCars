@@ -10,10 +10,12 @@ export default class CategoriesController {
       CreateCarSpecificationService,
     );
 
-    const { car_id, specification_id } = request.body;
+    const { specification_ids } = request.body;
+    const { car_id } = request.params;
+
     const car = await createCarSpecificationService.execute({
       car_id,
-      specification_id,
+      specification_ids,
     });
     return response.status(201).send(car);
   }

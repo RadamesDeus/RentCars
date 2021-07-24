@@ -8,7 +8,7 @@ import Car from '../typeorm/entities/Car';
 
 interface IRequest {
   car_id: string;
-  specification_id: string[];
+  specification_ids: string[];
 }
 
 @injectable()
@@ -19,15 +19,15 @@ class CreateCarSpecificationService {
     @inject('SpecificationsRepository')
     private specificationsRepository: ISpecificationsRepository,
   ) {}
-  public async execute({ car_id, specification_id }: IRequest): Promise<Car> {
+  public async execute({ car_id, specification_ids }: IRequest): Promise<Car> {
     const car = await this.carsRepository.findById(car_id);
 
     if (!car) throw new AppError('Não existe esse veiculo');
 
     const specifications = await this.specificationsRepository.findByIds(
-      specification_id,
+      specification_ids,
     );
-    if (specifications) car.specification = specifications;
+    if (specifications) car.specifications = specifications;
 
     return this.carsRepository.create(car);
   }
