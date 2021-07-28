@@ -16,32 +16,32 @@ export class CreateRentals1627136520123 implements MigrationInterface {
           {
             name: 'car_id',
             type: 'uuid',
-            isNullable: false,
           },
           {
             name: 'user_id',
             type: 'uuid',
-            isNullable: false,
           },
           {
             name: 'start_date',
             type: 'timestamp',
-            isNullable: false,
           },
           {
             name: 'end_date',
             type: 'timestamp',
-            isNullable: false,
+            isNullable: true,
           },
           {
             name: 'expected_return_date',
             type: 'timestamp',
-            isNullable: false,
+          },
+          {
+            name: 'status',
+            type: 'varchar',
           },
           {
             name: 'total',
             type: 'numeric',
-            isNullable: false,
+            isNullable: true,
           },
           {
             name: 'created_at',
@@ -56,14 +56,14 @@ export class CreateRentals1627136520123 implements MigrationInterface {
         ],
         foreignKeys: [
           {
-            name: 'fk_CarId_Rentals',
+            name: 'fk_Rentals_CarId',
             columnNames: ['car_id'],
             referencedColumnNames: ['id'],
             referencedTableName: 'cars',
             onDelete: 'SET NULL',
           },
           {
-            name: 'fk_UserId_Rentals',
+            name: 'fk_Rentals_UserId',
             columnNames: ['user_id'],
             referencedColumnNames: ['id'],
             referencedTableName: 'users',

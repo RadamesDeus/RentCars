@@ -11,6 +11,7 @@ import 'express-async-errors';
 import './container';
 import CrateConnection from './database/typeorm';
 import routes from './routes';
+import 'moment/locale/pt-br';
 import swaggerFile from './swagger.json';
 // import './database/typeorm';
 

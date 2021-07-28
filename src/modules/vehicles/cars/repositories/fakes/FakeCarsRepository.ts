@@ -17,7 +17,7 @@ class FakeCarsRepository implements ICarsRepository {
     fine_amount,
     brand,
     category_id,
-    specification,
+    specifications,
     id,
   }: ICreateCarDTO): Promise<Car> {
     const car = new Car();
@@ -30,7 +30,7 @@ class FakeCarsRepository implements ICarsRepository {
       fine_amount,
       brand,
       category_id,
-      specification,
+      specifications,
       available: true,
     });
 

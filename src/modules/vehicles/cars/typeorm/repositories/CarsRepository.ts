@@ -44,7 +44,7 @@ class CarsRepository implements ICarsRepository {
     await this.ormRepository.save(car);
     return car;
   }
-  findById(car_id: string): Promise<Car | undefined> {
+  async findById(car_id: string): Promise<Car | undefined> {
     return this.ormRepository.findOne(car_id);
   }
 
