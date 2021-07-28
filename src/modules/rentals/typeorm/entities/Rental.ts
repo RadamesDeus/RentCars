@@ -29,13 +29,13 @@ class Rental {
   @Column()
   user_id: string;
 
-  @Column('timestamp with time zone')
+  @CreateDateColumn()
   start_date: Date;
 
-  @Column('timestamp with time zone')
+  @CreateDateColumn()
   end_date: Date;
 
-  @Column('timestamp with time zone')
+  @CreateDateColumn()
   expected_return_date: Date;
 
   @Column()

@@ -56,9 +56,10 @@ class CreateRentalsService {
 
     const rentalsfinds = rentaslExists.filter(
       rental =>
-        !rental.end_date &&
-        start_date >= rental.start_date &&
-        start_date < rental.expected_return_date,
+        (moment(start_date) >= moment(rental.start_date) &&
+          moment(start_date) < moment(rental.expected_return_date)) ||
+        (moment(expected_return_date) >= moment(rental.start_date) &&
+          moment(expected_return_date) < moment(rental.expected_return_date)),
     );
 
     if (rentalsfinds.length)
@@ -70,8 +71,8 @@ class CreateRentalsService {
     const rental = await this.rentalsRepository.create({
       user_id,
       car_id,
-      start_date,
-      expected_return_date,
+      start_date: moment(start_date).toDate(),
+      expected_return_date: moment(expected_return_date).toDate(),
     });
     return rental;
   }
