@@ -48,7 +48,7 @@ describe('Create Car', () => {
       specification_ids: listSpecification,
     });
 
-    expect(carSpecification).toHaveProperty('specification');
+    expect(carSpecification).toHaveProperty('specifications');
     expect(carSpecification.specifications).toHaveLength(2);
   });
 });

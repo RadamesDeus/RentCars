@@ -25,6 +25,7 @@
     "swagger-ui-express": "^4.1.6",
     "tsyringe": "^4.5.0",
     "typeorm": "^0.2.32",
+    "supertest": "^6.1.4",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
@@ -48,7 +49,6 @@
     "eslint-plugin-prettier": "^3.4.0",
     "jest": "^27.0.6",
     "prettier": "^2.2.1",
-    "supertest": "^6.1.4",
     "ts-jest": "^27.0.3",
     "ts-node": "3.3.0",
     "ts-node-dev": "^1.0.0-pre.44",
