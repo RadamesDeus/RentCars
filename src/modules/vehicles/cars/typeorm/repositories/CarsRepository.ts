@@ -21,6 +21,11 @@ class CarsRepository implements ICarsRepository {
     this.ormRepository = getRepository(Car);
   }
 
+  async save(car: Car): Promise<Car | undefined> {
+    const carSave = await this.ormRepository.save(car);
+    return carSave;
+  }
+
   async create({
     description,
     daily_rate,

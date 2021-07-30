@@ -10,6 +10,15 @@ import {
 
 class FakeRentalsRepository implements IRentalsRepository {
   private Rentals: Rental[] = [];
+  async save(rental: Rental): Promise<void> {
+    const index = this.Rentals.findIndex(obj => obj.id === rental.id);
+    this.Rentals[index] = rental;
+  }
+
+  async findById(rental_id: string): Promise<Rental> {
+    const index = this.Rentals.findIndex(obj => obj.id === rental_id);
+    return this.Rentals[index];
+  }
 
   public async create(createRentalsDTO: ICreateRentalsDTO): Promise<Rental> {
     const rental = new Rental();

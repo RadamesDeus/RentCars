@@ -15,6 +15,8 @@ interface IShowRentalsDTO extends ICreateRentalsDTO {
 interface IRentalsRepository {
   create(createCarDTO: ICreateRentalsDTO): Promise<Rental>;
   show(showCarDTO: IShowRentalsDTO): Promise<Rental[]>;
+  findById(rental_id: string): Promise<Rental | undefined>;
+  save(rental: Rental): Promise<void>;
 }
 
 export {

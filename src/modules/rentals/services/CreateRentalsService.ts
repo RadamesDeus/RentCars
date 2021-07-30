@@ -74,6 +74,7 @@ class CreateRentalsService {
       start_date: moment(start_date).toDate(),
       expected_return_date: moment(expected_return_date).toDate(),
     });
+
     return rental;
   }
 }

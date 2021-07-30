@@ -13,6 +13,13 @@ class RentalsRepository implements IRentalsRepository {
   constructor() {
     this.ormRepository = getRepository(Rental);
   }
+  async save(rental: Rental): Promise<void> {
+    await this.ormRepository.save(rental);
+  }
+
+  async findById(rental_id: string): Promise<Rental | undefined> {
+    return this.ormRepository.findOne({ id: rental_id });
+  }
 
   async create(createCarDTO: ICreateRentalsDTO): Promise<Rental> {
     const rental = this.ormRepository.create(createCarDTO);
@@ -21,15 +28,6 @@ class RentalsRepository implements IRentalsRepository {
   }
 
   async show(optionFilter: IShowRentalsDTO): Promise<Rental[]> {
-    /*
-    id?: string;
-    car_id: string;
-    user_id: string;
-    start_date: Date;
-    expected_return_date: Date;
-    status: statusRentals[];
-    */
-
     if (optionFilter.id) {
       return this.ormRepository.find({ id: optionFilter.id });
     }

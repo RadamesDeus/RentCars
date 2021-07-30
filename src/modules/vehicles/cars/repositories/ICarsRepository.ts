@@ -27,6 +27,7 @@ interface ICarsRepository {
   list(optionFilter: IListCarFilterDTO | undefined): Promise<Car[]>;
   findByLicensePlate(license_plate: string): Promise<Car | undefined>;
   findById(car_id: string): Promise<Car | undefined>;
+  save(car: Car): Promise<Car | undefined>;
 }
 
 export { ICarsRepository, ICreateCarDTO, IListCarFilterDTO };

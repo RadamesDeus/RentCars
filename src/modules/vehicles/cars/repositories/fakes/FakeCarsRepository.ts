@@ -8,6 +8,11 @@ import {
 } from '../ICarsRepository';
 
 class FakeCarsRepository implements ICarsRepository {
+  public async save(car: Car): Promise<Car | undefined> {
+    const index = this.Cars.findIndex(obj => obj.id === car.id);
+    this.Cars[index] = car;
+    return car;
+  }
   private Cars: Car[] = [];
 
   public async create({
