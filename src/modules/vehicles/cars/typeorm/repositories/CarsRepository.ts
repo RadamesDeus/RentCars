@@ -69,7 +69,7 @@ class CarsRepository implements ICarsRepository {
 
     const carsQuery = await this.ormRepository
       .createQueryBuilder('car')
-      .leftJoinAndSelect('car.specification', 'specifications_cars')
+      .leftJoinAndSelect('car.specifications', 'specifications_cars')
       .where('car.available = :available', {
         available: optionFilter.available,
       });

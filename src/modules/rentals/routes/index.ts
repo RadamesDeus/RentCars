@@ -4,12 +4,15 @@ import { Router } from 'express';
 
 import CreateRentalsController from '../controllers/CreateRentalsController';
 import EndRentalsController from '../controllers/EndRentalsController';
+import ShowRentalsController from '../controllers/ShowRentalsController';
 import StartRentalsController from '../controllers/StartRentalsController';
+import { statusRentals } from '../repositories/IRentalsRepository';
 
 const routes = Router();
 const createRentalsController = new CreateRentalsController();
 const startRentalsController = new StartRentalsController();
 const endRentalsController = new EndRentalsController();
+const showRentalsController = new ShowRentalsController();
 
 routes.post(
   '/',
@@ -24,7 +27,7 @@ routes.post(
   createRentalsController.create,
 );
 
-routes.post(
+routes.put(
   '/start/:rental_id',
   ensureAuthenticated,
   celebrate({
@@ -35,7 +38,7 @@ routes.post(
   startRentalsController.update,
 );
 
-routes.post(
+routes.put(
   '/end/:rental_id',
   ensureAuthenticated,
   celebrate({
@@ -44,6 +47,21 @@ routes.post(
     }),
   }),
   endRentalsController.update,
+);
+
+routes.get(
+  '/filter',
+  celebrate({
+    [Segments.QUERY]: {
+      id: Joi.string().uuid(),
+      car_id: Joi.string().uuid(),
+      user_id: Joi.string().uuid(),
+      start_date: Joi.date(),
+      expected_return_date: Joi.date(),
+      status: Joi.array().items(Joi.string().valid(statusRentals)),
+    },
+  }),
+  showRentalsController.show,
 );
 
 export default routes;

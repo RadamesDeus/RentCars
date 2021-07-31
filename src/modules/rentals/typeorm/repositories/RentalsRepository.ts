@@ -28,11 +28,19 @@ class RentalsRepository implements IRentalsRepository {
   }
 
   async show(optionFilter: IShowRentalsDTO): Promise<Rental[]> {
+    console.log('optionFilter', optionFilter);
+
     if (optionFilter.id) {
-      return this.ormRepository.find({ id: optionFilter.id });
+      return this.ormRepository.find({
+        where: { id: optionFilter.id },
+        relations: ['cars'],
+      });
     }
 
-    const rentalQuery = this.ormRepository.createQueryBuilder('rental');
+    const rentalQuery = this.ormRepository
+      .createQueryBuilder('rental')
+      .leftJoinAndSelect('rental.car', 'cars')
+      .leftJoinAndSelect('rental.user', 'users');
 
     if (optionFilter?.status)
       rentalQuery.andWhere('rental.status IN (:...status)', {
@@ -61,8 +69,8 @@ class RentalsRepository implements IRentalsRepository {
           expected_return_date: optionFilter.expected_return_date,
         },
       );
-
-    return rentalQuery.getMany();
+    const list = await rentalQuery.getMany();
+    return list;
   }
 }
 export default RentalsRepository;

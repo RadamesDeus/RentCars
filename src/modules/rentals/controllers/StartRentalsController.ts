@@ -1,20 +1,15 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
-import CreateRentalsService from '../services/CreateRentalsService';
+import StartRentalsService from '../services/StartRentalsService';
 
 export default class CreateRentalsController {
   async update(request: Request, response: Response): Promise<Response> {
-    const createRentalsService = container.resolve(CreateRentalsService);
-    const { id: user_id } = request.user;
-    const { car_id, start_date, expected_return_date } = request.body;
+    const startRentalsService = container.resolve(StartRentalsService);
 
-    await createRentalsService.execute({
-      car_id,
-      user_id,
-      start_date,
-      expected_return_date,
-    });
-    return response.status(201).send();
+    const { rental_id } = request.params;
+
+    const rental = await startRentalsService.execute(rental_id as string);
+    return response.status(200).send(rental);
   }
 }

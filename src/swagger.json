@@ -123,8 +123,11 @@
         "tags": [
           "Specifications"
         ],
-        "summary": "Create category",
-        "description": "Create a new category",
+        "summary": "Create Specifications",
+        "description": "Create a new Specifications",
+        "security":[
+          { "bearerAuth": [] }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -183,6 +186,44 @@
           }
         }
       }
+    },
+    "/users/sessions": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Authenticate user",
+        "description": "Authenticate user.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email_username": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "email_username": "Rai",
+                  "password": "hard"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -195,6 +236,15 @@
         "description": {
           "type": "string"
         }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth":{
+        "type": "http",
+        "scheme":"bearer",
+        "bearerFormat":"JWT"
       }
     }
   }

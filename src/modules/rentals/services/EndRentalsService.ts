@@ -34,8 +34,8 @@ class EndRentalsService {
     const now = moment();
     const start_date = moment(rental.start_date);
     const return_date = moment(rental.expected_return_date);
-    let daily = now.diff(start_date, 'days');
-    const dalay = now.diff(return_date, 'days');
+    let daily = start_date.diff(now, 'days');
+    const dalay = return_date.diff(now, 'days');
 
     let calcule_dalay = 0;
     let total = 0;
@@ -51,6 +51,9 @@ class EndRentalsService {
     rental.status = statusRentals.Finished;
 
     await this.rentalsRepository.save(rental);
+
+    car.available = true;
+    await this.carsRepository.save(car);
 
     return rental;
   }
