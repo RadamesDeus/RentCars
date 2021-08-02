@@ -9,6 +9,44 @@
     }
   },
   "paths": {
+    "/users/sessions": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Authenticate user",
+        "description": "Authenticate user.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email_username": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "email_username": "Rai",
+                  "password": "hard"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
     "/categories": {
       "post": {
         "tags": [
@@ -16,6 +54,9 @@
         ],
         "summary": "Create category",
         "description": "Create a new category",
+        "security":[
+          { "bearerAuth": [] }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -46,6 +87,7 @@
           }
         }
       },
+
       "get": {
         "tags": [
           "Category"
@@ -87,12 +129,17 @@
         }
       }
     },
+
+
     "/categories/import": {
       "patch": {
         "tags": [
           "Category"
         ],
         "summary": "uploads an image",
+        "security":[
+          { "bearerAuth": [] }
+        ],
         "requestBody": {
           "content": {
             "multipart/form-data": {
@@ -118,6 +165,8 @@
         }
       }
     },
+
+
     "/specifications": {
       "post": {
         "tags": [
@@ -187,29 +236,122 @@
         }
       }
     },
-    "/users/sessions": {
+
+    "/Cars": {
       "post": {
         "tags": [
-          "Users"
+          "Cars"
         ],
-        "summary": "Authenticate user",
-        "description": "Authenticate user.",
+        "summary": "Create Rentals",
+        "description": "Create a new Rentals",
+        "security":[
+          { "bearerAuth": [] }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
-                  "email_username": {
+                  "name": {
                     "type": "string"
                   },
-                  "password": {
+                  "description": {
                     "type": "string"
                   }
                 },
                 "example": {
-                  "email_username": "Rai",
-                  "password": "hard"
+                  "name": "Teste Rentals",
+                  "description": "Exanple of test cretete Rentals"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Cars"
+        ],
+        "summary": "get categories",
+        "description": "get all category",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+     },
+
+     "/cars/images/{car_id}": {
+      "patch": {
+        "tags": [
+          "Cars"
+        ],
+        "summary": "uploads an image",
+        "security":[
+          { "bearerAuth": [] }
+        ],
+        "parameters": [
+          {
+            "name": "car_id",
+            "in": "path",
+            "description": "Car id",
+            "required": true,
+            "schema":{
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "images": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
                 }
               }
             }
@@ -224,7 +366,213 @@
           }
         }
       }
-    }
+    },
+    "/cars/specifications/{car_id}": {
+      "post": {
+        "tags": [
+          "Cars"
+        ],
+        "summary": "Create Rentals",
+        "description": "Create a new Rentals",
+        "security":[
+          { "bearerAuth": [] }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "Teste Rentals",
+                  "description": "Exanple of test cretete Rentals"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+
+
+    "/rentals": {
+      "post": {
+        "tags": [
+          "Rentals"
+        ],
+        "summary": "Create Rentals",
+        "description": "Create a new Rentals",
+        "security":[
+          { "bearerAuth": [] }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "Teste Rentals",
+                  "description": "Exanple of test cretete Rentals"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Rentals"
+        ],
+        "summary": "get categories",
+        "description": "get all category",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/rentals/start/:rental_id": {
+      "put": {
+        "tags": [
+          "Rentals"
+        ],
+        "summary": "start a Rental",
+        "description": "start a Rental",
+        "security":[
+          { "bearerAuth": [] }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "Teste Rentals",
+                  "description": "Exanple of test cretete Rentals"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+     },
+     "/rentals/end/:id": {
+      "put": {
+        "tags": [
+          "Rentals"
+        ],
+        "summary": "End a rental",
+        "description": "Do end a rental started",
+        "security":[
+          { "bearerAuth": [] }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "Teste Rentals",
+                  "description": "Exanple of test cretete Rentals"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+     }
   },
   "definitions": {
     "Specifications": {

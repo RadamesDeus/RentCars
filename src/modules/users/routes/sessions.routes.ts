@@ -1,13 +1,13 @@
-import SessionsController from "@modules/users/controllers/SessionsController";
+import SessionsController from '@modules/users/controllers/SessionsController';
 // import { celebrate, Segments, Joi } from "celebrate";
-import { Router } from "express";
+import { Router } from 'express';
 
 const routes = Router();
 
 const sessionsController = new SessionsController();
 
 routes.post(
-  "/sessions",
+  '/sessions',
 
   // celebrate({
   //   [Segments.BODY]: {
@@ -17,7 +17,7 @@ routes.post(
   //   },
   // }),
 
-  sessionsController.create
+  sessionsController.create,
 );
 
 export default routes;

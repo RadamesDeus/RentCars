@@ -39,6 +39,16 @@ class UsersRepository implements IUsersRepository {
   public async findByEmail(email: string): Promise<User | undefined> {
     const user = await this.ormRepository.findOne({
       where: { email: email.toLowerCase() },
+      select: [
+        'id',
+        'username',
+        'name',
+        'password',
+        'email',
+        'driver_license',
+        'admin',
+        'avatar',
+      ],
     });
 
     return user;
@@ -47,6 +57,16 @@ class UsersRepository implements IUsersRepository {
   public async findByUsername(username: string): Promise<User | undefined> {
     const user = await this.ormRepository.findOne({
       where: { username: username.toLowerCase() },
+      select: [
+        'id',
+        'username',
+        'password',
+        'name',
+        'email',
+        'driver_license',
+        'admin',
+        'avatar',
+      ],
     });
 
     return user;

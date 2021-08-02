@@ -1,57 +1,57 @@
-import { MigrationInterface, QueryRunner, Table } from "typeorm";
+import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
 export class CreateUserToken1619188695078 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: "UserToken",
+        name: 'UserToken',
         columns: [
           {
-            name: "id",
-            type: "uuid",
+            name: 'id',
+            type: 'uuid',
             isPrimary: true,
-            generationStrategy: "uuid",
-            default: "uuid_generate_v4()",
+            generationStrategy: 'uuid',
+            default: 'uuid_generate_v4()',
           },
           {
-            name: "token",
-            type: "uuid",
+            name: 'token',
+            type: 'uuid',
             isNullable: false,
-            generationStrategy: "uuid",
-            default: "uuid_generate_v4()",
+            generationStrategy: 'uuid',
+            default: 'uuid_generate_v4()',
           },
           {
-            name: "user_id",
-            type: "uuid",
+            name: 'user_id',
+            type: 'uuid',
             isNullable: false,
           },
           {
-            name: "created_at",
-            type: "timestamp",
-            default: "now()",
+            name: 'created_at',
+            type: 'timestamp',
+            default: 'now()',
           },
           {
-            name: "updated_at",
-            type: "timestamp",
-            default: "now()",
+            name: 'updated_at',
+            type: 'timestamp',
+            default: 'now()',
           },
         ],
         foreignKeys: [
           {
-            name: "fk_UserToken_UserId",
-            columnNames: ["user_id"],
-            referencedColumnNames: ["id"],
-            referencedTableName: "users",
-            onUpdate: "CASCADE",
-            onDelete: "CASCADE",
+            name: 'fk_UserToken_UserId',
+            columnNames: ['user_id'],
+            referencedColumnNames: ['id'],
+            referencedTableName: 'users',
+            onUpdate: 'CASCADE',
+            onDelete: 'CASCADE',
           },
         ],
-      })
+      }),
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey("UserToken", "fk_UserToken_UserId");
-    await queryRunner.dropTable("UserToken");
+    await queryRunner.dropForeignKey('UserToken', 'fk_UserToken_UserId');
+    await queryRunner.dropTable('UserToken');
   }
 }

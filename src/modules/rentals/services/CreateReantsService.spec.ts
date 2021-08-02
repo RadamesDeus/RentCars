@@ -120,14 +120,5 @@ describe('Create Rentals', () => {
         expected_return_date: moment('2021-08-01').toDate(),
       }),
     ).rejects.toBeInstanceOf(AppError);
-
-    expect(
-      await createRentalsService.execute({
-        car_id: car.id,
-        user_id: user.id,
-        start_date: moment('2021-08-10').toDate(),
-        expected_return_date: moment('2021-08-11').toDate(),
-      }),
-    ).rejects.toBeInstanceOf(AppError);
   });
 });
