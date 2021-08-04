@@ -1,11 +1,12 @@
-import { injectable, inject } from 'tsyringe';
-import { differenceInHours } from 'date-fns';
-import AppError from '@shared/errors/AppError';
+import User from '@modules/users/infra/typeorm/entities/User';
+import UserToken from '@modules/users/infra/typeorm/entities/UserToken';
+import IHashPassword from '@modules/users/providers/HashPassword/IHashPassword';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import IUserTokenRepository from '@modules/users/repositories/IUserTokenRepository';
-import IHashPassword from '@modules/users/providers/HashPassword/IHashPassword';
-import UserToken from '@modules/users/infra/typeorm/entities/UserToken';
-import User from '@modules/users/infra/typeorm/entities/User';
+import { differenceInHours } from 'date-fns';
+import { injectable, inject } from 'tsyringe';
+
+import AppError from '@shared/errors/AppError';
 
 interface IRequest {
   token: string;

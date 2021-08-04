@@ -4,20 +4,29 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  Generated,
+  JoinColumn,
+  ManyToOne,
 } from 'typeorm';
 
-@Entity('UserToken')
+import User from './User';
+
+@Entity('users_tokens')
 class UserToken {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
-  user_id: string;
+  refresh_token: string;
+
+  @CreateDateColumn()
+  expires_date: Date;
 
   @Column()
-  @Generated('uuid')
-  token: string;
+  user_id: string;
+
+  @ManyToOne(() => User)
+  @JoinColumn({ name: 'user_id' })
+  user: User;
 
   @CreateDateColumn()
   created_at: Date;

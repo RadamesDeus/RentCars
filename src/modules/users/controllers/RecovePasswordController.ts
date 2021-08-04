@@ -1,8 +1,6 @@
-import { Request, Response } from 'express';
-
-import { container } from 'tsyringe';
-
 import RecoverPasswordServices from '@modules/users/services/RecoverPasswordServices';
+import { Request, Response } from 'express';
+import { container } from 'tsyringe';
 
 export default class SessionsController {
   public async create(request: Request, response: Response): Promise<Response> {

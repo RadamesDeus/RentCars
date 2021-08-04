@@ -1,5 +1,5 @@
 import '../providers';
-import IUserTokenRepository from '@modules/users/repositories/IUserTokenRepository';
+import { IUserTokenRepository } from '@modules/users/repositories/IUserTokenRepository';
 import UserTokenRepository from '@modules/users/typeorm/repositories/UserTokenRepository';
 import { container } from 'tsyringe';
 
