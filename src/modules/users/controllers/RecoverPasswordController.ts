@@ -2,7 +2,7 @@ import RecoverPasswordServices from '@modules/users/services/RecoverPasswordServ
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
-export default class SessionsController {
+export default class RecoverPasswordController {
   public async create(request: Request, response: Response): Promise<Response> {
     const { email } = request.body;
 

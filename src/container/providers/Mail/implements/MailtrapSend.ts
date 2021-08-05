@@ -1,5 +1,4 @@
-import ISendMailDTO from '@shared/container/providers/Mail/dtos/ISendMailDTO';
-import ISendMail from '../ISendMail';
+import { ISendMail, ISendMailDTO } from '../ISendMail';
 
 export default class MailtrapSend implements ISendMail {
   public async SendEmail({ to }: ISendMailDTO): Promise<void> {

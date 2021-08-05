@@ -1,5 +1,5 @@
-import IMailTemplate from '@shared/container/providers/MailTemplate/models/IMailTemplate';
-import IParseMailTemplateDTO from '@shared/container/providers/MailTemplate/dtos/IParseMailTemplateDTO';
+import IParseMailTemplateDTO from '../dtos/IParseMailTemplateDTO';
+import IMailTemplate from '../models/IMailTemplate';
 
 class FakeMailTemplate implements IMailTemplate {
   public async parse({

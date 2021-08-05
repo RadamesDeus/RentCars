@@ -1,6 +1,7 @@
-import path from 'path';
-import fs from 'fs';
 import UploadConfig from '@config/upload';
+import fs from 'fs';
+import path from 'path';
+
 import IStorageFile from '../IStorageFile';
 
 export default class DiskStorage implements IStorageFile {

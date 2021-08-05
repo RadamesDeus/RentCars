@@ -1,6 +1,6 @@
+import UploadConfig from '@config/upload';
 import path from 'path';
 
-import UploadConfig from '@config/upload';
 import IStorageFile from '../../IStorageFile';
 
 export default class DiskStorage implements IStorageFile {

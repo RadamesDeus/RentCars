@@ -1,8 +1,8 @@
-import { injectable, inject } from 'tsyringe';
 import nodemailer, { Transporter } from 'nodemailer';
-import IMailTemplate from '@shared/container/providers/MailTemplate/models/IMailTemplate';
-import ISendMailDTO from '@shared/container/providers/Mail/dtos/ISendMailDTO';
-import ISendMail from '../ISendMail';
+import { injectable, inject } from 'tsyringe';
+
+import IMailTemplate from '../../MailTemplate/models/IMailTemplate';
+import { ISendMail, ISendMailDTO } from '../ISendMail';
 
 @injectable()
 export default class EtherealMail implements ISendMail {
@@ -31,16 +31,16 @@ export default class EtherealMail implements ISendMail {
 
   public async SendEmail({
     to,
+    from,
     subject,
     templateData,
-    from,
   }: ISendMailDTO): Promise<void> {
     const info = await this.client.sendMail({
-      from: {
-        name: from?.name || 'Equipe GoBarber',
-        address: from?.email || 'equipe@gobaber.com',
-      },
       to: { name: to.name, address: to.email },
+      from: {
+        name: from?.name || 'Equipe Rental Cars',
+        address: from?.email || 'equipe@rentalcars.com',
+      },
       subject,
       html: await this.mailTemplate.parse(templateData),
     });

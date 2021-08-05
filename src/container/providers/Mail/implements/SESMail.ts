@@ -1,8 +1,8 @@
 import { injectable, inject } from 'tsyringe';
+
 // import nodemailer, { Transporter } from 'nodemailer/lib/ses-transport';
-import IMailTemplate from '@shared/container/providers/MailTemplate/models/IMailTemplate';
-import ISendMailDTO from '@shared/container/providers/Mail/dtos/ISendMailDTO';
-import ISendMail from '../ISendMail';
+import IMailTemplate from '../../MailTemplate/models/IMailTemplate';
+import { ISendMail, ISendMailDTO } from '../ISendMail';
 
 @injectable()
 export default class SESMail implements ISendMail {
